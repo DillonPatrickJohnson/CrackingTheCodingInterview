@@ -46,7 +46,7 @@ public:
 			}
 		}
 
-		cout << "Answer: |" << output << "|" << endl;
+		cout << "Answer 1.3: |" << output << "|" << endl;
 	}
 };
 
@@ -74,7 +74,7 @@ public:
 		}
 
 		//only max one letter can have an odd count
-		cout << "Answer: " << checkPalindrome()<< endl;
+		cout << "Answer 1.4: " << checkPalindrome()<< endl;
 	}
 
 	bool checkPalindrome()
@@ -100,3 +100,103 @@ public:
 		return true;
 	}
 };
+
+/*	1.5 -	One Away: There are three types of edits that can be performed on strings: insert a character,
+			remove a character, or replace a character. Given two strings, write a function to check if they are
+			one edit (or zero edits) away.
+			Ex:
+			pale, ple   -> true
+			pales, pale -> true
+			pale, bale  -> true
+			pale, bake  -> false
+*/
+
+class OneAway
+{
+public:
+	string str1;
+	string str2;
+
+	OneAway(string s1, string s2)
+	{
+		str1 = s1;
+		str2 = s2;
+		cout << "Answer 1.5: " << check() << endl;
+	}
+
+	bool check()
+	{
+		if (str1.length() != str2.length() && str1.length() != str2.length() + 1 && str1.length() != str2.length() - 1)
+		{
+			return false;	//lengths of the strings must be +/- 1 from eachother
+		}
+		else
+		{
+			string temp;
+			string temp2;
+			if (str1.length() == str2.length())
+			{
+				return checkReplace(str1, str2);
+			}
+			else if (str1.length() > str2.length())
+			{
+				temp = str1;
+				temp2 = str2;
+				return checkInsertion(str1, str2);
+			}
+			else
+			{
+				temp = str2;
+				temp2 = str1;
+				return checkInsertion(str2, str1);
+			}
+		}
+	}
+
+	bool checkReplace(string temp, string temp2)
+	{
+		bool check = false;
+
+		for (int i = 0; i < temp.length(); i++)
+		{
+			if (temp[i] != temp2[i])
+			{
+				if (check == true)
+				{
+					return false;
+				}
+				else
+				{
+					check = true;
+				}
+			}
+		}
+		return true;
+	}
+
+	bool checkInsertion(string temp1, string temp2)
+	{
+		bool check = false;
+		//temp1 is 1 larger than temp2
+		for (int i = 0; i < temp1.length(); i++)
+		{
+			if (temp1[i] != temp2[i] && check == false)
+			{
+				check = true;
+			}
+			else if (check == true)
+			{
+				int j = i - 1;
+				if (temp1[i] != temp2[j])
+				{
+					if (check == true)
+					{
+						return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+};
+
